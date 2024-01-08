@@ -14,7 +14,7 @@ const animationPage = () => {
   //   width:'40%',
   //   ease:'power2.inOut'
   // })
-  const tl = new gsap.timeline({ paused: true })
+  const tl = new gsap.timeline({ paused: true, reversed: true })
   let toggle = false
   tl.to('.cover', 1, {
     width: '60%',
@@ -46,8 +46,20 @@ const animationPage = () => {
     }
   )
 
-  navButton.addEventListener('click', () => {
-    tl.play()
+  navButton.addEventListener('click', (e) => {
+
+    if(tl.isActive()){
+      e.preventDefault()
+      e.stopImmediatePropagation()
+      return false
+    }
+    if(toggle){
+      tl.reverse()
+      toggle = false
+    }else{
+      tl.play()
+      toggle = true
+    }
   })
 }
 
